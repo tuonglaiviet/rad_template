@@ -1,0 +1,33 @@
+@charset 'UTF-8';
+.cmsContent {
+	-webkit-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	word-wrap: break-word;
+  	ul, ol {
+		padding-left: 20px;
+		margin-bottom: 20px;
+    }
+	ul {
+		li {
+			list-style: disc;
+		}
+	}
+	ol {
+		li {
+			list-style-type: decimal;
+		}
+	}
+	p { margin-bottom: 30px };
+	img{
+		max-width: 100%;
+		height: auto;
+		max-height: 100%;
+		width: 100%;
+	}
+	i, em { font-style: italic; }
+	b, strong { font-weight: bold; }
+	del { text-decoration: line-through; }
+}
+
+
+
