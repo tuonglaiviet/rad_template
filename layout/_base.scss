@@ -1,0 +1,100 @@
+// Author: A+LIVE Outsource
+// modify by A+LIVE Outsource - Dev 20160321
+//==================================================
+@charset 'UTF-8';
+
+//==================================================
+// base
+//==================================================
+$mincho: "ヒラギノ明朝 Pro W6", "Hiragino Mincho Pro", "HGS明朝E", "ＭＳ Ｐ明朝", serif;
+$primary_font: "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Osaka", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+$yugothic: "游ゴシック", "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ ゴシック", sans-serif;
+html {
+	font-size: 62.5%; // Sets up the Base 10 stuff
+}
+body {
+	@include font-size(14);
+	color: #776254;
+	font-family: $primary_font;
+}
+* {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+img{
+	max-width: 100%;
+	height: auto;
+}
+a {
+	text-decoration: none;
+	color: inherit;
+	@include transition(all .3s);
+	&:hover {
+		opacity: 0.7;
+	}
+	&:hover,
+	&:focus,
+	&:visited {
+		text-decoration: none;
+	}
+	&:hover,
+	&:focus {
+		color: inherit;
+	}
+}
+p{
+	margin: 0;
+	line-height: 1.6;
+	@include max-screen(768px) {
+		line-height: 2;
+	}
+}
+ul, ol {
+	margin: 0;
+	padding: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+.hidden {
+    display: none !important;
+}
+.inner{
+	max-width: 1140px;
+	margin: auto;
+	@include pie-clearfix();
+	width: 100%;
+}
+.animated {
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+#wrap {
+	overflow: hidden;
+}
+.fade {
+    opacity: 0;
+    -webkit-transition: opacity .15s linear;
+    -o-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+    &.in {
+        opacity: 1;
+    }
+}
+.clearfix {
+    @include clearfix();
+}
+.sp {
+	display: none;
+	@include max-screen(768px) {
+		display: block;
+	}
+}
+.pc {
+	@include max-screen(768px) {
+		display: none;
+	}
+}
