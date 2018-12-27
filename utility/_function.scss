@@ -1,0 +1,150 @@
+// Author: Trung Qua Dep Trai
+//==================================================
+@charset 'UTF-8';
+
+//==================================================
+// Black and White Opacity Functions
+// Call | .css { background: black(0.5); }
+//==================================================
+@function black($opacity) {
+	@return rgba(black, $opacity)
+}
+@function white($opacity) {
+	@return rgba(white, $opacity)
+}
+
+//==================================================
+// Centering
+// Call | .css { @include centerer; }
+//==================================================
+
+@mixin centerer {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+// If you want to be able to center in only one direction...
+
+@mixin centerer($horizontal: true, $vertical: true) {
+	position: absolute;
+	@if ($horizontal and $vertical) {
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	} @else if ($horizontal) {
+		left: 50%;
+		transform: translate(-50%, 0);
+	} @else if ($vertical) {
+		top: 50%;
+		transform: translate(0, -50%);
+	}
+}
+
+//==================================================
+// Triangle helper mixin
+// @param {Direction} $direction - Triangle direction, either `top`, `right`, `bottom` or `left`
+// @param {Color} $color [currentcolor] - Triangle color 
+// @param {Length} $size [1em] - Triangle size
+// Call | .css::before { @include triangle(bottom, #000, 5px); }
+//==================================================
+
+@mixin triangle($direction, $color: currentcolor, $size: 1em, $distance: 5px) {
+	@if not index(top right bottom left, $direction) {
+		@error "Direction must be either `top`, `right`, `bottom` or `left`.";
+	}
+
+	width: 0;
+	height: 0;
+	content: '';
+	z-index: 2;
+	margin: $distance;
+	border-#{opposite-position($direction)}: ($size * 1.5) solid $color;
+
+	$perpendicular-borders: $size solid transparent;
+
+	@if $direction == top or $direction == bottom {
+		border-left:   $perpendicular-borders;
+		border-right:  $perpendicular-borders;
+	} @else if $direction == right or $direction == left {
+		border-bottom: $perpendicular-borders;
+		border-top:    $perpendicular-borders;
+	}
+}
+
+//==================================================
+/// Mixin to customize scrollbars
+/// Beware, this does not work in all browsers
+/// @author Hugo Giraudel
+/// @param {Length} $size - Horizontal scrollbar's height and vertical scrollbar's width
+/// @param {Color} $foreground-color - Scrollbar's color
+/// @param {Color} $background-color [mix($foreground-color, white, 50%)] - Scrollbar's color
+/// @example scss - Scrollbar styling
+/// Call | .box { @include scrollbars(.5em, slategray); }
+//==================================================
+
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white,  50%)) {
+	// For Google Chrome
+	::-webkit-scrollbar {
+		width:  $size;
+		height: $size;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: $foreground-color;
+	}
+
+	::-webkit-scrollbar-track {
+		background: $background-color;
+	}
+
+	// For Internet Explorer
+	body {
+		scrollbar-face-color: $foreground-color;
+		scrollbar-track-color: $background-color;
+	}
+}
+
+//==================================================
+/// Shorthand mixin for offset positioning
+/// @param {String} $position - Either `relative`, `absolute` or `fixed`
+/// @param {Length} $top [null] - Top offset
+/// @param {Length} $right [null] - Right offset
+/// @param {Length} $bottom [null] - Bottom offset
+/// @param {Length} $left [null] - Left offset
+//==================================================
+
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+	position: $position;
+	top: $top; 
+	right: $right;
+	bottom: $bottom;
+	left: $left;
+}
+
+//==================================================
+/// Text Rotation
+/// @param 
+//==================================================
+
+@mixin rotation($degrees) {
+	-webkit-transform: rotate($degrees); /* Safari */
+	-moz-transform: rotate($degrees); /* Firefox */
+	-ms-transform: rotate($degrees); /* IE */
+	-o-transform: rotate($degrees); /* Opera */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=#{cos($degrees)}, M12=#{-1*sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)})";
+    filter:  progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=#{cos($degrees)}, M12=#{-1*sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)});
+}
+
+//==================================================
+/// Transition
+/// @param 
+/// @include transition(.5s ease-in-out);
+//==================================================
+@mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
